@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 
-export default function Products() {
+export default function User() {
   return (
     <div className="container">
       <Head>
@@ -11,7 +11,9 @@ export default function Products() {
       </Head>
       <Header />
       <main>
-        <div>Products</div>
+        <div>
+          <h1 className="firstHeadline">Login</h1>
+        </div>
       </main>
       <Footer />
       <style jsx>{`
@@ -20,6 +22,17 @@ export default function Products() {
 
         main {
           margin-top: 100px;
+        }
+        .firstHeadline {
+          left: 50%;
+          font-size: 60px;
+          font-family: LL Circular Bold Web, Muli, Arial, sans-serif;
+          font-weight: 400;
+          font-style: normal;
+          text-rendering: optimizeLegibility;
+          color: #34414f;
+          line-height: 66px;
+          max-width: 180px;
         }
       `}</style>
       <style jsx global>{`

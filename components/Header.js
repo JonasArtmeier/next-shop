@@ -1,66 +1,88 @@
 import Link from 'next/link';
+import {
+  Listbox,
+  ListboxInput,
+  ListboxButton,
+  ListboxPopover,
+  ListboxList,
+  ListboxOption,
+} from '@reach/listbox';
 
 export default function Header() {
   return (
     <nav className="nav">
       <div className="navBar">
-        <div className="products">
-          <Link href="/products">
-            <a className="navButton">Products</a>
-          </Link>
-        </div>
         <div className="home">
           <Link href="/index">
             <a className="navButton">
               <img
                 className="logo"
                 alt="funny logo and home botton"
-                src="/bear-logo.png"
+                src="/bear-logo-only.png"
               ></img>
             </a>
           </Link>
         </div>
+        <div className="products">
+          <span id="my-label" className="navButton">
+            Products
+          </span>
+          <Listbox defaultValue="Products" className="navButton">
+            {''}
+            <ListboxOption value="Boys" className="navButton">
+              <Link href="/boys">
+                <a className="navButton">Boys</a>
+              </Link>
+            </ListboxOption>{' '}
+            <ListboxOption value="Girls" className="navButton">
+              <Link href="/girls">
+                <a className="navButton">Girls</a>
+              </Link>
+            </ListboxOption>{' '}
+          </Listbox>
+        </div>
+
+        {/* <div className="products">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <Link href="/products">
+              <a className="navButton">Products</a>
+            </Link>
+          </a>
+        </div> */}
         <div className="userButton">
-          <Link href="/user">
-            <a className="navButton">User</a>
+          <Link href="/login">
+            <a className="navButton">Login</a>
           </Link>
         </div>
       </div>
       <style jsx>{`
         .nav {
-          color: red;
-          height: 83px;
+          color: black;
+          height: 73px;
           position: fixed;
+          top: 0;
           width: 100%;
-          z-index: 100;
           background-color: transparent;
           border-bottom: 1px solid transparent;
           background-color: #fffdf9;
           transition: background-color 0.18s, height 0.18s;
-          align-items: center;
+          box-shadow: 2px 2px;
+          z-index: 100;
         }
         .navBar {
-          height: 60px;
-          padding: 39px 16px 16px;
-          position: relative;
-          max-width: 1209px;
+          color: lightgrey;
+          height: 50px;
+          width: 80%;
           margin: auto;
-          transition: padding 0.18s;
           display: flex;
           justify-content: space-around;
-          vertical-align: middle;
           align-items: center;
           padding-top: 5px;
         }
         .home {
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          vertical-align: middle;
-          float: center;
-          margin: 0;
           width: 118px;
           height: 28px;
+          margin: auto;
         }
         .navButton {
           font-family: LL Circular Book Web, Muli, Arial, sans-serif;
@@ -73,31 +95,24 @@ export default function Header() {
           color: #34414f;
           margin: auto;
           height: 28px;
-          z-index: 2;
+          z-index: 100;
         }
         .products {
           width: 118px;
           height: 28px;
           margin: auto;
-          float: left;
+          z-index: 100;
         }
         .userButton {
           width: 118px;
           height: 28px;
           margin: auto;
-          float: right;
         }
 
-        /* .logo {
-            float: left;
-            margin: auto;
-            width: 118px;
-            height: 28px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: auto;
-          } */
+        .logo {
+          box-sizing: border-box;
+          width: 120%;
+        }
       `}</style>
     </nav>
   );

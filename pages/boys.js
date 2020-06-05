@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 
-export default function Products() {
+export default function Boys() {
   return (
     <div className="container">
       <Head>
@@ -11,7 +11,7 @@ export default function Products() {
       </Head>
       <Header />
       <main>
-        <div>Products</div>
+        <div>Boys</div>
       </main>
       <Footer />
       <style jsx>{`
