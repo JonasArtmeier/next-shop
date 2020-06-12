@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import React from 'react';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 
@@ -27,7 +29,9 @@ export default function Home() {
                   </ul>
                 </div>
               </div>
-              <img className="male-biker" src="male-biker.png"></img>
+              <Link href="/boys">
+                <img className="male-biker" src="male-biker.png"></img>
+              </Link>
             </div>
             <div className="second-section">
               <div className="text-right">
@@ -40,7 +44,10 @@ export default function Home() {
                   </ul>
                 </div>
               </div>
-              <img className="girl-biker" src="girl-bike.png"></img>
+              <Link href="/girls">
+                <img className="girl-biker" src="girl-bike.png"></img>
+              </Link>
+              .
             </div>
           </section>
         </main>

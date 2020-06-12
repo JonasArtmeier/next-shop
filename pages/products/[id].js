@@ -1,11 +1,24 @@
 import Head from 'next/head';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import React, { useState } from 'react';
+
 // import { getProductsById } from '../../db.js';
+
+// export function CartButton(props) {
+//   const freshCookies = () => {
+//     let newCookies = [];
+//     const oldCookies = Cookies.get('shoppingCart');
+//     oldCookies === undefined
+//       ? (newCookies = [props.items])
+//       : (newCookies = [...JSON.parse(oldCookies), props.bikes]);
+//     Cookies.set('shoppingCart', newCookies);
+//   };
 
 export default function product(props) {
   if (!props.product[0]) return <div>product not found!</div>;
-  console.log(props.product[0].id);
+  // const [clientStock, setClientStock] = useState(props.product[0].stock);
+  console.log(freshCookies());
   return (
     <div className="container">
       <Head>
@@ -20,7 +33,7 @@ export default function product(props) {
             <div>The Image</div>
             <img
               className="image"
-              alt="Picture of the Product"
+              alt="the Product"
               src={props.product[0].image}
             ></img>
           </div>
@@ -31,8 +44,22 @@ export default function product(props) {
             <p>stainless Steel </p>
             <p>shipping in less than one week</p>
             <p> easy to assemble</p>
+            <h3>Stock:</h3>
+            {/* <p>{clientStock}</p> */}
             <div>
-              <button className="orderButton">Add to Cart</button>
+              <button
+                className="orderButton"
+                onClick={
+                  // (() => {
+                  //   setClientStock(clientStock - 1);
+                  // },
+                  () => {
+                    freshCookies();
+                  }
+                }
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         </section>
@@ -189,16 +216,25 @@ export default function product(props) {
 //   };
 // }
 
+// import freshCookies from '../../components/Cookies';
+
 export async function getServerSideProps(context) {
   const id = context.params.id;
 
-  const { getProductById } = await import('../../db.js');
+  const { cartCookies } = await import('../../components/Cookies');
+  const freshCookies = await cartCookies();
+
+  const {
+    getProductById, // updateStockById
+  } = await import('../../db.js');
 
   const product = await getProductById(id);
+  // await updateStockById(event);
 
   return {
     props: {
       product,
+      freshCookies,
     },
   };
 }

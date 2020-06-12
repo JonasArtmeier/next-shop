@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 import {
   Listbox,
   ListboxInput,
@@ -24,9 +25,11 @@ export default function Header() {
           </Link>
         </div>
         <div className="products">
-          <span id="my-label" className="navButton">
-            Products
-          </span>
+          <Link href="/products">
+            <span id="my-label" className="navButton">
+              Products
+            </span>
+          </Link>
           <Listbox defaultValue="Products" className="navButton">
             {''}
             <ListboxOption value="Boys" className="navButton">
@@ -50,8 +53,8 @@ export default function Header() {
           </a>
         </div> */}
         <div className="userButton">
-          <Link href="/login">
-            <a className="navButton">Login</a>
+          <Link href="/cart">
+            <a className="navButton">Cart</a>
           </Link>
         </div>
       </div>

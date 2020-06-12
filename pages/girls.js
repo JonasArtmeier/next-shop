@@ -1,8 +1,12 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import React from 'react';
 import Header from '../components/Header.js';
 import Footer from '../components/Footer.js';
 
-export default function Girls() {
+export default function girls({ products }) {
+  const girlBikes = products.filter((bike) => bike.type === 'girl');
+
   return (
     <div className="container">
       <Head>
@@ -11,7 +15,20 @@ export default function Girls() {
       </Head>
       <Header />
       <main>
-        <div>Girls</div>
+        {girlBikes.map((bike) => {
+          return (
+            <div>
+              <h1>{bike.name}</h1>
+              <Link href={'/products/' + bike.id}>
+                <img
+                  className="image"
+                  alt="Picture of the Product"
+                  src={bike.image}
+                ></img>
+              </Link>
+            </div>
+          );
+        })}
       </main>
       <Footer />
       <style jsx>{`
@@ -32,4 +49,16 @@ export default function Girls() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { getProducts } = await import('../db.js');
+
+  const products = await getProducts(context.params);
+
+  return {
+    props: {
+      products,
+    },
+  };
 }

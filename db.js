@@ -10,14 +10,14 @@ export async function getProducts() {
   return products;
 }
 
-// export async function updateProductNameById(id, name) {
-//   const product = await sql`
-//     UPDATE products
-//       SET name = ${name}
-//       WHERE id = ${id}
-//   `;
-//   return product;
-// }
+export async function updateStockById(id) {
+  const stock = await sql`
+    UPDATE products
+      SET stock = ${stock - 1}
+      WHERE id = ${id}
+  `;
+  return stock;
+}
 
 export async function getProductById(id) {
   const product = await sql`
