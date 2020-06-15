@@ -3,13 +3,14 @@ import nextCookies from 'next-cookies';
 import Cookies from 'js-cookie';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import cartCookies from '../components/Cookies';
+import cartCookies from '../cookies';
 import React from 'react';
 
 export default function cart(props) {
+  //useState
+
   /****************** getting cartList & list from Cookies *******************/
   let myCart = [];
-  let idCookies = [];
   let message = '';
   let prices = [];
 
@@ -17,6 +18,7 @@ export default function cart(props) {
 
   const oldCookies = props.shoppingCart;
   oldCookies === undefined ? (myCart = []) : (myCart = oldCookies);
+
   //cookieId is down there
   let cartId = myCart.map((a) => a.id);
   /****************** get the amount of every item *******************/
@@ -107,11 +109,16 @@ export default function cart(props) {
               sum = prices.reduce(
                 (accumulator, currentValue) => accumulator + currentValue,
               );
+              console.log(product);
 
               return (
                 <div key={i}>
                   <div className="cartList">
-                    <img className="image" src={'/' + product.image} />
+                    <img
+                      alt="the Product"
+                      className="image"
+                      src={product.image}
+                    />
 
                     <p style={{ width: '100px' }}>{product.name}</p>
                     <div style={{ display: 'flex' }}>
@@ -299,10 +306,15 @@ export default function cart(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const { shoppingCart } = nextCookies(context);
+  const { getProducts } = await import('../db.js');
+
+  const products = await getProducts(context.params);
+
   return {
     props: {
+      products,
       ...(shoppingCart ? { shoppingCart: shoppingCart } : undefined),
     },
   };

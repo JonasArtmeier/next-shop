@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import React, { useState } from 'react';
+import cartCookies from '../../cookies.js';
+import nextCookies from 'next-cookies';
 
 // import { getProductsById } from '../../db.js';
 
@@ -15,10 +17,10 @@ import React, { useState } from 'react';
 //     Cookies.set('shoppingCart', newCookies);
 //   };
 
-export default function product(props) {
+export default function bike(props) {
   if (!props.product[0]) return <div>product not found!</div>;
-  // const [clientStock, setClientStock] = useState(props.product[0].stock);
-  console.log(freshCookies());
+
+  const [clientStock, setClientStock] = useState(props.product[0].stock);
   return (
     <div className="container">
       <Head>
@@ -45,18 +47,17 @@ export default function product(props) {
             <p>shipping in less than one week</p>
             <p> easy to assemble</p>
             <h3>Stock:</h3>
-            {/* <p>{clientStock}</p> */}
+            <p>{clientStock}</p>
             <div>
+              <h3>Price:</h3>
+              <p>{props.product[0].price}€</p>
               <button
                 className="orderButton"
-                onClick={
-                  // (() => {
-                  //   setClientStock(clientStock - 1);
-                  // },
-                  () => {
-                    freshCookies();
-                  }
-                }
+                onClick={() => {
+                  setClientStock(clientStock - 1);
+
+                  cartCookies(props);
+                }}
               >
                 Add to Cart
               </button>
@@ -221,8 +222,9 @@ export default function product(props) {
 export async function getServerSideProps(context) {
   const id = context.params.id;
 
-  const { cartCookies } = await import('../../components/Cookies');
-  const freshCookies = await cartCookies();
+  // const { cartCookies } = await import('../../cookies.js');
+  // const freshCookies = await cartCookies();
+  const { shoppingCart } = nextCookies(context);
 
   const {
     getProductById, // updateStockById
@@ -234,7 +236,8 @@ export async function getServerSideProps(context) {
   return {
     props: {
       product,
-      freshCookies,
+      ...(shoppingCart ? { shoppingCart: shoppingCart } : undefined),
+      y,
     },
   };
 }

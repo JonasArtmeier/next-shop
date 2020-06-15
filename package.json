@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "ley": "dotenv ley"
+    "ley": "dotenv ley",
+    "migrate": "ley",
+    "e2e": "cypress open",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/link-context": "^2.0.0-beta.3",
@@ -24,5 +27,9 @@
     "postgres": "^1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "cypress": "^4.8.0",
+    "jest": "^26.0.1"
   }
 }
