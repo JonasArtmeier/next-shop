@@ -1,6 +1,17 @@
 // import nextCookies from 'next-cookies';
 import Cookies from 'js-cookie';
 
+type Props = {
+  product: {
+    id: string;
+    name: string;
+    stock: string;
+    image: string;
+    size: string;
+    price: string;
+  };
+};
+
 export default function cartCookies(props) {
   let newCookies = [];
   const oldCookies = Cookies.get('shoppingCart');

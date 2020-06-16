@@ -20,11 +20,7 @@ export default function girls({ products }) {
             <div>
               <h1>{bike.name}</h1>
               <Link href={'/products/' + bike.id}>
-                <img
-                  className="image"
-                  alt="Picture of the Product"
-                  src={bike.image}
-                ></img>
+                <img className="image" alt="The Product" src={bike.image}></img>
               </Link>
             </div>
           );

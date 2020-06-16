@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 
 export default function Footer() {
   return (
@@ -36,6 +37,8 @@ export default function Footer() {
       <style jsx>
         {`
           .relative {
+            display: flex;
+            flex-direction: column;
           }
           .footer {
             left: 0;
@@ -49,7 +52,7 @@ export default function Footer() {
             justify-content: center;
             align-items: center;
             color: black;
-            margin-top: 15px;
+            margin-top: auto;
             margin-bottom: 0;
             background-color: transparent;
 

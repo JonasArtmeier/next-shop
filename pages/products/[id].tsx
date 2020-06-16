@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import React, { useState } from 'react';
-import cartCookies from '../../cookies.js';
+import cartCookies from '../../cookies';
 import nextCookies from 'next-cookies';
 
 // import { getProductsById } from '../../db.js';
@@ -17,7 +17,18 @@ import nextCookies from 'next-cookies';
 //     Cookies.set('shoppingCart', newCookies);
 //   };
 
-export default function bike(props) {
+type Props = {
+  product: {
+    id: string;
+    name: string;
+    stock: string;
+    image: string;
+    size: string;
+    price: string;
+  };
+};
+
+export default function bike(props: Props) {
   if (!props.product[0]) return <div>product not found!</div>;
 
   const [clientStock, setClientStock] = useState(props.product[0].stock);
@@ -237,7 +248,6 @@ export async function getServerSideProps(context) {
     props: {
       product,
       ...(shoppingCart ? { shoppingCart: shoppingCart } : undefined),
-      y,
     },
   };
 }

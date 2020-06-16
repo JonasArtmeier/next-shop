@@ -3,22 +3,46 @@ import nextCookies from 'next-cookies';
 import Cookies from 'js-cookie';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import cartCookies from '../cookies';
+// import Cookies from '../cookies';
 import React from 'react';
 
-export default function cart(props) {
+// type Products = {
+//   id: string;
+//   name: string;
+//   stock: string;
+//   image: string;
+//   size: string;
+//   price: string;
+// };
+// type shoppingCart = {
+
+// }
+// type cartProps = {
+//   Array<Products>; }
+
+type cartProps = {
+  shoppingCart: any;
+};
+type Prduct = {
+  id: string;
+  name: string;
+  stock: string;
+  image: string;
+  size: string;
+  price: string;
+};
+
+export default function cart(props: cartProps) {
   //useState
 
-  /****************** getting cartList & list from Cookies *******************/
+  /****************** getting shoppingCart & list from Cookies *******************/
   let myCart = [];
   let message = '';
   let prices = [];
-
   let sum = 0;
 
   const oldCookies = props.shoppingCart;
   oldCookies === undefined ? (myCart = []) : (myCart = oldCookies);
-
   //cookieId is down there
   let cartId = myCart.map((a) => a.id);
   /****************** get the amount of every item *******************/
@@ -33,6 +57,7 @@ export default function cart(props) {
   if (myCart.length === 0) {
     message = 'is empty';
   }
+
   /****************** delete duplicate from array  *******************/
   // const uniqueArray = myCart.reduce(function (accumulator, currentValue, id) {
   //   if (accumulator.indexOf(currentValue.id) === -1) {
@@ -62,14 +87,15 @@ export default function cart(props) {
 
   const removeItem = (index) => {
     myCart.splice(index, 1);
-    Cookies.set('cartList', myCart);
+    Cookies.set('shoppingCart', myCart);
     location.reload();
   };
+
   /****************** add to item  *******************/
 
   const addToItem = (index) => {
     myCart.push(index);
-    Cookies.set('cartList', myCart);
+    Cookies.set('shoppingCart', myCart);
     location.reload();
   };
   /****************** reduce the amount of item  *******************/
@@ -77,7 +103,7 @@ export default function cart(props) {
   const reduceItem = (index) => {
     let i = myCart.indexOf(index);
     if (i !== -1) myCart.splice(i, 1);
-    Cookies.set('cartList', myCart);
+    Cookies.set('shoppingCart', myCart);
     location.reload();
   };
   /****************** return *******************/
@@ -88,9 +114,9 @@ export default function cart(props) {
         <title>Jo's Shop</title>
         <link rel="icon" href="/Logo.ico" />
       </Head>
-      <Header list={props.shoppingCart} />
+      <Header />
       <main>
-        <div className="title">
+        <div className="titl">
           <p>Your</p>
           <h2>Shopping Basket {message}</h2>
         </div>
@@ -109,18 +135,19 @@ export default function cart(props) {
               sum = prices.reduce(
                 (accumulator, currentValue) => accumulator + currentValue,
               );
-              console.log(product);
 
               return (
                 <div key={i}>
-                  <div className="cartList">
+                  <div className="shoppingCart">
                     <img
                       alt="the Product"
                       className="image"
                       src={product.image}
                     />
 
-                    <p style={{ width: '100px' }}>{product.name}</p>
+                    <p data-cy="cart-item-name" style={{ width: '100px' }}>
+                      {product.name}
+                    </p>
                     <div style={{ display: 'flex' }}>
                       <button
                         onClick={() => {
@@ -140,6 +167,7 @@ export default function cart(props) {
                     </div>
                     <p>€{prices[i]}</p>
                     <button
+                      data-cy="remove-button"
                       className="buttonRight"
                       onClick={() => {
                         removeItem(i);
@@ -169,7 +197,7 @@ export default function cart(props) {
           align-items: center;
           text-align: center;
         }
-        .cartList {
+        .shoppingCart {
           display: flex;
           justify-content: space-around;
           align-items: center;
@@ -255,15 +283,20 @@ export default function cart(props) {
           letter-spacing: 0.15em;
           padding: 10px 0;
         }
+        main {
+          display: flex;
+        }
       `}</style>
       <style jsx global>{`
         html,
         body {
-          display: block;
-          max-width: 100%;
+          display: flex;
+          justify-content: left;
+          text-align: center;
+          align-items: center;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+          padding: 0;
+          background-color: white;
         }
         h1 {
           margin: 0;
@@ -274,6 +307,9 @@ export default function cart(props) {
           text-transform: uppercase;
         }
         h2 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           margin: 0;
           padding: 0;
           font-size: 40px;
@@ -310,7 +346,7 @@ export async function getServerSideProps(context) {
   const { shoppingCart } = nextCookies(context);
   const { getProducts } = await import('../db.js');
 
-  const products = await getProducts(context.params);
+  const products = await getProducts();
 
   return {
     props: {
