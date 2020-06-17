@@ -7,8 +7,7 @@
     "build": "next build",
     "heroku-postbuild": "yarn migrate up && next build",
     "start": "next start -p $PORT",
-    "ley": "dotenv ley",
-    "migrate": "ley",
+    "migrate": "dotenv ley",
     "e2e": "cypress open",
     "test": "jest"
   },
