@@ -1,7 +1,35 @@
 require('dotenv').config();
 
+// for postgres on AWS
+// var mysql = require('mysql');
+
+// var connection = mysql.createConnection({
+//   host: process.env.mywebshop,
+//   user: process.env.mywebshop,
+//   password: process.env.mywebshop,
+//   port: 5432,
+// });
+
+// connection.connect(function (err) {
+//   if (err) {
+//     console.error('Database connection failed: ' + err.stack);
+//     return;
+//   }
+
+//   console.log('Connected to database.');
+// });
+
+// connection.end();
+
+// end of Postres on AWS
+
 const postgres = require('postgres');
-const sql = postgres();
+const sql =   process.env.NODE_ENV === 'production'
+? // Heroku needs SSL connections but
+  // has an "unauthorized" certificate
+  // https://devcenter.heroku.com/changelog-items/852
+  postgres({ ssl: { rejectUnauthorized: false } })
+: postgres();
 
 export async function getProducts() {
   const products = await sql`
