@@ -17,6 +17,24 @@ export default function Home() {
   })(window,document,'script','dataLayer','GTM-W2J294T');`,
           }}
         ></script>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=UA-169796110-1`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'UA-169796110-1', {
+                      page_path: window.location.pathname,
+                    });
+                  `,
+          }}
+        />
+
         <title>Jo's Shop</title>
         <link rel="icon" href="/Logo.ico" />
       </Head>
